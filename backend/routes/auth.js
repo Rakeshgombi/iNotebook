@@ -1,7 +1,11 @@
 const express = require('express');
+const bcrypt = require('bcryptjs');
+var jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
+
+const JWT_SECRETE = "Rockyisagood$oy"
 
 // Create a user using: POST "/api/auth/createuser", Doesn't require Login
 router.post('/createuser', [
@@ -15,18 +19,29 @@ router.post('/createuser', [
   if (!errors.isEmpty()) {
     return res.status(400).json({ errors: errors.array() });
   }
-  // Check whether the user with the same email already exists
   try {
+    // Check whether the user with the same email already exists
     let user = await User.findOne({ email: req.body.email })
     if (user) {
       return res.status(400).json({ error: "Sorry, A user with the same email already exists" })
     }
+    const salt = await bcrypt.genSalt(10);
+
+    let secPass = await bcrypt.hash(req.body.password, salt);
     user = await User.create({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password,
+      password: secPass,
     })
-    res.json(req.body);
+    const data = {
+      user: {
+        id: user.id
+      }
+    }
+    const authToken = jwt.sign(data, JWT_SECRETE);
+
+    res.json({authToken});
+
   } catch (error) {
     console.error(error.message);
     res.status(500).send("Unknown error occured");
