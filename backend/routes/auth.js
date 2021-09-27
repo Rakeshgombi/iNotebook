@@ -49,7 +49,7 @@ router.post('/createuser', [
 });
 
 
-// Route 1 = Authenticate a user using: POST "/api/auth/login", Doesn't require Login
+// Route 2 = Authenticate a user using: POST "/api/auth/login", Doesn't require Login
 router.post('/login', [
   body('email', "Enter the valid Email").isEmail(),
   body('password', "password cannot be blank").exists()
@@ -83,7 +83,7 @@ router.post('/login', [
 })
 
 
-// Route 1 = Get logged in user detail using: POST "/api/auth/getuser", Login required
+// Route 3 = Get logged in user detail using: POST "/api/auth/getuser", Login required
 router.post('/getuser', fetchuser, async (req, res) => {
   try {
     userId = req.user.id;
