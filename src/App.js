@@ -1,8 +1,26 @@
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import Navbar from './Components/Navbar';
+import Home from './Components/Home';
+import About from './Components/About';
 
 function App() {
   return (
-    <h1>Hello World</h1>
+    <Router>
+      <Navbar />
+      <Switch>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/about">
+          <About />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
