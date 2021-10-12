@@ -1,12 +1,11 @@
-import './App.css';
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route
+  BrowserRouter as Router, Route, Switch
 } from "react-router-dom";
-import Navbar from './Components/Navbar';
-import Home from './Components/Home';
+import './App.css';
 import About from './Components/About';
+import { Alert } from './Components/Alert';
+import Home from './Components/Home';
+import Navbar from './Components/Navbar';
 import NoteState from './Context/NoteState';
 
 function App() {
@@ -14,6 +13,7 @@ function App() {
     <NoteState>
       <Router>
         <Navbar />
+        <Alert message="This is a amazing react course" />
         <div className="container">
           <Switch>
             <Route exact path="/">

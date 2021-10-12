@@ -11,7 +11,7 @@ const Notes = () => {
       <div className="w-100 d-flex justify-content-center align-items-sm-start flex-wrap">
 
         {notes.map((note) => {
-          return <Noteitem note={note} />
+          return <Noteitem key={note._id} note={note} />
         })}
       </div>
     </div>
