@@ -1,5 +1,4 @@
-import React, { useContext } from 'react'
-import { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import noteContext from '../Context/noteContext';
 
 
@@ -18,7 +17,7 @@ const Addnote = () => {
     setNote({ ...note, [e.target.name]: e.target.value })   // ... is a spread operator
   }
   return (
-    <div className="container my-4 px-5 bg-white shadow-light">
+    <div className="container my-4 px-5 py-3 bg-white shadow-light">
       <h1>Add a Note</h1>
       <form>
         <div className="mb-3">
@@ -29,7 +28,7 @@ const Addnote = () => {
           <label htmlFor="description" className="form-label">Description</label>
           <textarea className="form-control" id="description" name="description" rows="2" onChange={onChange}></textarea>
         </div>
-        <button type="submit" className="btn btn-primary" onClick={handleClick}>Submit</button>
+        <button type="submit" className="btn btn-primary" onClick={handleClick}>Add Note</button>
       </form>
     </div>
   )
