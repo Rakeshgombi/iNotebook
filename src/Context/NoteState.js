@@ -52,11 +52,18 @@ const NoteState = (props) => {
   }
 
 
-
   // Delete a note
-  const deleteNote = (id) => {
-    console.log("Deleting the note with ID" + id);
-    const newNotes = notes.filter((note) => { return note._id !== id })
+  const deleteNote = async (id) => {
+    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjEzZGY2MGYyODNjZmNhYmVmM2FhYzRmIn0sImlhdCI6MTYzMjU2ODQyMX0.vVrYysYxzaO_ip0c2f-o-LvqXmFcMONvESyu9ijhstE'
+      }
+    });
+    const json = response.json();
+    console.log("deleting a Note: ", id);
+    const newNotes = notes.filter((note)=> {return note._id !== id})
     setnotes(newNotes)
   }
 
@@ -76,7 +83,7 @@ const NoteState = (props) => {
     // Logic to edit a call      
     for (let index = 0; index < notes.length; index++) {
       const element = notes[index];
-      if (element._id == id) {
+      if (element._id === id) {
         element.title = title;
         element.description = description;
         element.tag = tag;
