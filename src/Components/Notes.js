@@ -1,26 +1,28 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react';
+import noteContext from '../Context/noteContext';
 import Addnote from './Addnote';
 import Noteitem from './Noteitem';
-import noteContext from '../Context/noteContext'
 
 const Notes = () => {
   const context = useContext(noteContext)
-  const { notes, getNotes, addNote } = context;
-  const [note, setNote] = useState({ etitle: "", edescription: "", etag: "" })
+  const { notes, getNotes, editNote } = context;
+  const [note, setNote] = useState({id:"", etitle: "", edescription: "", etag: "" })
   useEffect(() => {
     getNotes()
   }, [])
 
   const ref = useRef(null)
+  const refClose = useRef(null)
 
   const updateNote = (currentNote) => {
     ref.current.click();
-    setNote({ etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });
+    setNote({id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });
   }
-
+  
   const handleClick = (e) => {
+    refClose.current.click();
+    editNote(note.id, note.etitle, note.edescription, note.etag)
     e.preventDefault();
-    console.log("Updating the note", note);
   }
 
   const onChange = (e) => {
@@ -43,11 +45,11 @@ const Notes = () => {
               <form>
                 <div className="mb-3">
                   <label htmlFor="etitle" className="form-label">Title</label>
-                  <input type="text" className="form-control" id="etitle" name="etitle" onChange={onChange} aria-describedby="etitle" value={note.etitle} />
+                  <input type="text" className="form-control" id="etitle" name="etitle" onChange={onChange} aria-describedby="etitle" value={note.etitle} required/>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="edescription" className="form-label">Description</label>
-                  <textarea className="form-control" id="edescription" name="edescription" rows="2" onChange={onChange} value={note.edescription}></textarea>
+                  <textarea className="form-control" id="edescription" name="edescription" rows="2" onChange={onChange} value={note.edescription} required></textarea>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="etag" className="form-label">Tag</label>
@@ -57,16 +59,17 @@ const Notes = () => {
               </form>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" className="btn btn-primary" onClick={handleClick}>Save changes</button>
+              <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button  disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" className="btn btn-primary" onClick={handleClick}>Save changes</button>
             </div>
           </div>
         </div>
       </div>
       <Addnote />
-      <div className="my-3">
-        <h1>Your Notes</h1>
+      <div className="my-3 ">
+        <h1 className="text-center">Your Notes</h1>
         <div className="w-100 d-flex justify-content-center align-items-sm-start flex-wrap">
+          {notes.length === 0 && <h3>No Notes to display</h3>}
           {notes.map((note) => {
             return <Noteitem key={note._id} updateNote={updateNote} note={note} />
           })}
