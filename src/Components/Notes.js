@@ -55,12 +55,11 @@ const Notes = () => {
                   <label htmlFor="etag" className="form-label">Tag</label>
                   <input className="form-control" id="etag" name="etag" onChange={onChange} value={note.etag} />
                 </div>
-                <button type="submit" className="btn btn-primary" onClick={handleClick}>Add Note</button>
               </form>
             </div>
             <div className="modal-footer">
-              <button ref={refClose} type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button  disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" className="btn btn-primary" onClick={handleClick}>Save changes</button>
+              <button ref={refClose} type="button" className="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
+              <button  disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" className="btn btn-outline-success btn-sm" onClick={handleClick}>Save changes</button>
             </div>
           </div>
         </div>
