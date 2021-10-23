@@ -65,6 +65,7 @@ const Notes = () => {
         </div>
       </div>
       <Addnote />
+      <hr />
       <div className="my-3 ">
         <h1 className="text-center">Your Notes</h1>
         <div className="w-100 d-flex justify-content-center align-items-sm-start flex-wrap">

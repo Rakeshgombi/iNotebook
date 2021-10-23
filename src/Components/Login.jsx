@@ -31,16 +31,18 @@ const Login = () => {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3" >
+        <div className="mb-3 col-md-8 col-12 mx-auto" >
           <label htmlFor="email" className="form-label">Email address</label>
-          <input type="email" className="form-control border-none shadow-sm" id="email" name="email" aria-describedby="email" value={credentials.email} onChange={onChange} />
+          <input type="email" className="form-control border-none" id="email" name="email" aria-describedby="email" value={credentials.email} onChange={onChange} />
           <div id="emailHelp" className="form-text">We'll never share your email with anyone else.</div>
         </div>
-        <div className="mb-3">
+        <div className="mb-3 col-md-8 col-12 mx-auto">
           <label htmlFor="password" className="form-label">Password</label>
-          <input type="password" className="form-control border-none shadow-sm" id="password" name="password" value={credentials.password} onChange={onChange} />
+          <input type="password" className="form-control border-none" id="password" name="password" value={credentials.password} onChange={onChange} />
         </div>
-        <button type="submit" className="btn btn-primary">Submit</button>
+        <div className="mb-3 col-md-8 col-12 mx-auto">
+          <button type="submit" className="btn btn-outline-success">Submit</button>
+        </div>
       </form>
     </div>
   )
