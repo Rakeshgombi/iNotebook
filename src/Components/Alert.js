@@ -1,11 +1,14 @@
 import React from 'react'
 
-export const Alert = (props) => {
+const Alert = (props) => {
+  const capitalize = {
+    textTransform: "Capitalize"
+  }
   return (
-    <div>
-      <div className="alert alert-success" role="alert">
-        {props.message}
-      </div>
+    props.alert && <div className={`alert alert-${props.alert.type} alert-dismissible fade show`} role="alert">
+      <strong style={capitalize}>{props.alert.type === 'danger'? 'error:':props.alert.type }</strong> {props.alert.msg}
     </div>
   )
 }
+
+export default Alert

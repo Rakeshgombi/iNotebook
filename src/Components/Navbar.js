@@ -8,7 +8,7 @@ import {
 const Navbar = () => {
   let location = useLocation();
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg position-fixed top-0 w-100">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow-lg w-100">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">iNotebook</Link>
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

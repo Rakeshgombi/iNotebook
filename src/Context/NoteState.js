@@ -3,8 +3,7 @@ import { useState } from 'react';
 
 const NoteState = (props) => {
   const host = "http://localhost:5000"
-  const notesInitial = []
-
+  const notesInitial = [];
 
   const [notes, setnotes] = useState(notesInitial)
 
@@ -52,7 +51,6 @@ const NoteState = (props) => {
     });
     const json = await response.json();
     const newNotes = notes.filter((note) => { return note._id !== id })
-    setnotes(newNotes)
   }
 
   // Edit a note

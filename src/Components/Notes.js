@@ -3,7 +3,7 @@ import noteContext from '../Context/noteContext';
 import Addnote from './Addnote';
 import Noteitem from './Noteitem';
 
-const Notes = () => {
+const Notes = (props) => {
   const context = useContext(noteContext)
   const { notes, getNotes, editNote } = context;
   const [note, setNote] = useState({id:"", etitle: "", edescription: "", etag: "" })
@@ -21,8 +21,10 @@ const Notes = () => {
   
   const handleClick = (e) => {
     refClose.current.click();
+    props.showAlert("Note updated Successfully", "success");
     editNote(note.id, note.etitle, note.edescription, note.etag)
     e.preventDefault();
+    
   }
 
   const onChange = (e) => {
@@ -36,24 +38,24 @@ const Notes = () => {
       </button>
       <div className="modal fade" id="exampleModal" tabIndex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div className="modal-dialog">
-          <div className="modal-content">
+          <div className="modal-content bg-dark">
             <div className="modal-header">
               <h5 className="modal-title" id="exampleModalLabel">Update your Note</h5>
-              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              <button type="button" className="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div className="modal-body">
               <form>
                 <div className="mb-3">
                   <label htmlFor="etitle" className="form-label">Title</label>
-                  <input type="text" className="form-control" id="etitle" name="etitle" onChange={onChange} aria-describedby="etitle" value={note.etitle} required/>
+                  <input type="text" className="form-control bg-dark text-light" id="etitle" name="etitle" onChange={onChange} aria-describedby="etitle" value={note.etitle} required/>
                 </div>
                 <div className="mb-3">
                   <label htmlFor="edescription" className="form-label">Description</label>
-                  <textarea className="form-control" id="edescription" name="edescription" rows="2" onChange={onChange} value={note.edescription} required></textarea>
+                  <textarea className="form-control bg-dark text-light" id="edescription" name="edescription" rows="2" onChange={onChange} value={note.edescription} required></textarea>
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="etag" className="form-label">Tag</label>
-                  <input className="form-control" id="etag" name="etag" onChange={onChange} value={note.etag} />
+                  <label htmlFor="etag" className="form-label ">Tag</label>
+                  <input className="form-control bg-dark text-light" id="etag" name="etag" onChange={onChange} value={note.etag} />
                 </div>
               </form>
             </div>
@@ -64,14 +66,14 @@ const Notes = () => {
           </div>
         </div>
       </div>
-      <Addnote />
+      <Addnote showAlert={props.showAlert}/>
       <hr />
       <div className="my-3 ">
         <h1 className="text-center">Your Notes</h1>
         <div className="w-100 d-flex justify-content-center align-items-sm-start flex-wrap">
           {notes.length === 0 && <h3>No Notes to display</h3>}
           {notes.map((note) => {
-            return <Noteitem key={note._id} updateNote={updateNote} note={note} />
+            return <Noteitem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
           })}
         </div>
       </div>

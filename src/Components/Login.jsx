@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 
-const Login = () => {
+const Login = (props) => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   let history = useHistory();
   const host = "http://localhost:5000"
@@ -20,16 +20,18 @@ const Login = () => {
     if (json.success) {
       // Save the authtoken and redirect
       localStorage.setItem("token", json.authtoken);
+      props.showAlert("Welcome Back! Login Successful", "success");
       history.push("/")
     } else {
-      alert("Invalid Credentials");
+      props.showAlert("Invalid Credentials", "danger");
     }
   }
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value })   // ... is a spread operator
   }
   return (
-    <div>
+    <div className="container mt-5 pt-5">
+      <h1 className="col-md-8 col-12 mx-auto">Signin</h1>
       <form onSubmit={handleSubmit}>
         <div className="mb-3 col-md-8 col-12 mx-auto" >
           <label htmlFor="email" className="form-label">Email address</label>

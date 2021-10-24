@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom';
 
-const Signup = () => {
+const Signup = (props) => {
   const [sCredentials, setsCredentials] = useState({ name: "", email: "", password: "", cpassword: "" });
   let history = useHistory();
   const host = "http://localhost:5000"
@@ -21,17 +21,19 @@ const Signup = () => {
     // Save the authtoken and redirect
 
     localStorage.setItem("token", json.authtoken);
+    props.showAlert("Congratulations! Account created Successfully", "success");
     history.push("/")
   }
   else{
-    alert("Passwords doesnt match")
+    props.showAlert("Passwords doesnt match", "danger")
   }
   }
   const onChange = (e) => {
     setsCredentials({ ...sCredentials, [e.target.name]: e.target.value })   // ... is a spread operator
   }
   return (
-    <div className="container">
+    <div className="container mt-5 pt-5">
+      <h1 className="col-md-8 col-12 mx-auto">Signup  </h1>
       <div className="row g-3">
         <form onSubmit={handleSubmit}>
           <div className="col-md-8 col-12 mx-auto">
