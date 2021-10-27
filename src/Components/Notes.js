@@ -2,29 +2,37 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import noteContext from '../Context/noteContext';
 import Addnote from './Addnote';
 import Noteitem from './Noteitem';
+import { useHistory } from 'react-router-dom';
 
 const Notes = (props) => {
   const context = useContext(noteContext)
+  let history = useHistory();
   const { notes, getNotes, editNote } = context;
-  const [note, setNote] = useState({id:"", etitle: "", edescription: "", etag: "" })
   useEffect(() => {
-    getNotes()
+    if (localStorage.getItem('token')) {
+      getNotes();
+      // eslint-disable-next-line
+    }
+    else {
+      history.push("/login")
+    }
   }, [])
 
   const ref = useRef(null)
   const refClose = useRef(null)
+  const [note, setNote] = useState({ id: "", etitle: "", edescription: "", etag: "" })
 
   const updateNote = (currentNote) => {
     ref.current.click();
-    setNote({id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });
+    setNote({ id: currentNote._id, etitle: currentNote.title, edescription: currentNote.description, etag: currentNote.tag });
   }
-  
+
   const handleClick = (e) => {
     refClose.current.click();
     props.showAlert("Note updated Successfully", "success");
     editNote(note.id, note.etitle, note.edescription, note.etag)
     e.preventDefault();
-    
+
   }
 
   const onChange = (e) => {
@@ -47,7 +55,7 @@ const Notes = (props) => {
               <form>
                 <div className="mb-3">
                   <label htmlFor="etitle" className="form-label">Title</label>
-                  <input type="text" className="form-control bg-dark text-light" id="etitle" name="etitle" onChange={onChange} aria-describedby="etitle" value={note.etitle} required/>
+                  <input type="text" className="form-control bg-dark text-light" id="etitle" name="etitle" onChange={onChange} aria-describedby="etitle" value={note.etitle} required />
                 </div>
                 <div className="mb-3">
                   <label htmlFor="edescription" className="form-label">Description</label>
@@ -61,20 +69,20 @@ const Notes = (props) => {
             </div>
             <div className="modal-footer">
               <button ref={refClose} type="button" className="btn btn-outline-secondary btn-sm" data-bs-dismiss="modal">Close</button>
-              <button  disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" className="btn btn-outline-success btn-sm" onClick={handleClick}>Save changes</button>
+              <button disabled={note.etitle.length < 5 || note.edescription.length < 5} type="button" className="btn btn-outline-success btn-sm" onClick={handleClick}>Save changes</button>
             </div>
           </div>
         </div>
       </div>
-      <Addnote showAlert={props.showAlert}/>
+      <Addnote showAlert={props.showAlert} />
       <hr />
       <div className="my-3 ">
         <h1 className="text-center">Your Notes</h1>
         <div className="w-100 d-flex justify-content-center align-items-sm-start flex-wrap">
-          {notes.length === 0 && <h3>No Notes to display</h3>}
-          {notes.map((note) => {
-            return <Noteitem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
-          })}
+          {(notes.length === 0) ? (<h3>No Notes to display</h3>) :
+          (notes.map((note) => {return <Noteitem key={note._id} updateNote={updateNote} note={note} showAlert={props.showAlert} />
+            }))
+            }
         </div>
       </div>
     </>

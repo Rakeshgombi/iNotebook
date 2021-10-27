@@ -8,7 +8,7 @@ const Signup = (props) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(sCredentials.password == sCredentials.cpassword){
+    if(sCredentials.password === sCredentials.cpassword){
     const response = await fetch(`${host}/api/auth/createuser`, {
       method: 'POST',
       headers: {
@@ -20,7 +20,7 @@ const Signup = (props) => {
     console.log(json);
     // Save the authtoken and redirect
 
-    localStorage.setItem("token", json.authtoken);
+    localStorage.setItem("token", json.authToken);
     props.showAlert("Congratulations! Account created Successfully", "success");
     history.push("/")
   }
